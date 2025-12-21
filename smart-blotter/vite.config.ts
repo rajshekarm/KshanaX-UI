@@ -10,5 +10,14 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src")
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5039', // .NET Backend Port
+        changeOrigin: true,
+        secure: false,
+      }
+    }
   }
 })

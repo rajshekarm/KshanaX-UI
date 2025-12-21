@@ -13,11 +13,18 @@ const Home = () => {
     setIsParsing(true);
     try {
       // 1. Call your .NET REST API
-      const response = await fetch('/api/orders/process-intent', {
-        method: 'POST',
+      const response = await fetch('/api/trade/process-intent', {
+        method: 'POST'  ,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ textPrompt: prompt })
+        body: JSON.stringify({ prompt: prompt })
       });
+
+      
+      if (!response.ok) {
+       const errorText = await response.text();
+       console.error("Server Error:", errorText);
+       return;
+    }
       
       const aiData = await response.json();
 
