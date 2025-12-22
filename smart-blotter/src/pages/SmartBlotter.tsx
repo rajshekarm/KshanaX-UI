@@ -9,6 +9,7 @@ import {
   ChevronRight, 
   ExternalLink 
 } from 'lucide-react';
+import { apiFetch } from '@/utils/api';
 
 // --- Types ---
 interface Order {
@@ -36,7 +37,7 @@ const SmartBlotter = () => {
     setIsConfirming(true);
     try {
       // Simulate API call to Kshanax Backend
-      const response = await fetch(`/api/trade/confirm`, {
+      const response = await apiFetch(`/api/trade/confirm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ blockOrderId: orderId })

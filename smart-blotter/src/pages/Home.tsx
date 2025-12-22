@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight, Terminal } from 'lucide-react'; 
 
+
+import { apiFetch } from '../utils/api'
+
+
 const Home = () => {
   const navigate = useNavigate();
   const [prompt, setPrompt] = useState("");
@@ -13,8 +17,8 @@ const Home = () => {
     setIsParsing(true);
     try {
       // 1. Call your .NET REST API
-      const response = await fetch('/api/trade/process-intent', {
-        method: 'POST'  ,
+      const response = await apiFetch('/api/trade/process-intent', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: prompt })
       });
