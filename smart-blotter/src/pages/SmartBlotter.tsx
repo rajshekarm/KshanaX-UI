@@ -136,6 +136,7 @@ const SmartBlotter = () => {
           {/* --- RIGHT COLUMN: CONTEXT & BLOTTER (4/12) --- */}
           <aside className="col-span-12 lg:col-span-4 space-y-6">
             
+            
             {/* 1. MARKET CONTEXT WIDGET */}
             <section className="bg-slate-900/40 border border-slate-800/50 rounded-2xl p-6 backdrop-blur-md">
               <div className="flex justify-between items-center mb-6">
@@ -149,13 +150,21 @@ const SmartBlotter = () => {
               </div>
               
               <div className="space-y-4">
-                <div className="p-4 bg-slate-800/30 rounded-xl border border-slate-700/30 hover:border-slate-600 transition-colors cursor-default">
-                  <div className="text-[9px] text-blue-400 font-black font-mono mb-1 tracking-tighter">VOLATILITY_ALERT</div>
-                  <div className="text-sm text-slate-300 font-medium leading-snug">NVDA showing high relative strength vs SPY in pre-market.</div>
+                <div className="p-4 bg-slate-800/30 rounded-xl border border-slate-700/30">
+                  <div className="text-[9px] text-blue-400 font-black font-mono mb-1 tracking-tighter uppercase">Routing Intelligence</div>
+                  <div className="text-sm text-slate-300 font-medium leading-snug">
+                    Smart Order Router (SOR) identifies high liquidity in non-displayed venues.
+                  </div>
+                  
+                  {/* Integrated Liquidity Chart */}
+                  <DarkPoolLiquidityChart />
                 </div>
-                <div className="p-4 bg-slate-800/30 rounded-xl border border-slate-700/30 hover:border-slate-600 transition-colors cursor-default">
-                  <div className="text-[9px] text-slate-500 font-black font-mono mb-1 tracking-tighter">LIQUIDITY_REPORT</div>
-                  <div className="text-sm text-slate-300 font-medium leading-snug">Sufficient depth found in Dark Pools for block execution.</div>
+
+                <div className="p-4 bg-slate-800/30 rounded-xl border border-slate-700/30">
+                  <div className="text-[9px] text-slate-500 font-black font-mono mb-1 tracking-tighter uppercase">Vol Alert</div>
+                  <div className="text-sm text-slate-300 font-medium leading-snug">
+                    NVDA relative strength is 1.4x vs SPY.
+                  </div>
                 </div>
               </div>
             </section>
@@ -237,5 +246,37 @@ const NoDataView = () => (
     </Link>
   </div>
 );
+
+const DarkPoolLiquidityChart = () => {
+  const venues = [
+    { name: 'Instinet', liquidity: 85, color: 'bg-blue-500' },
+    { name: 'Sigma X', liquidity: 62, color: 'bg-blue-400' },
+    { name: 'Crossfinder', liquidity: 45, color: 'bg-blue-600' },
+    { name: 'Luminex', liquidity: 30, color: 'bg-blue-800' },
+  ];
+
+  return (
+    <div className="mt-4 space-y-3">
+      <div className="text-[9px] text-slate-500 font-black font-mono tracking-tighter uppercase mb-2">
+        Venue Liquidity Depth (Real-time)
+      </div>
+      {venues.map((venue) => (
+        <div key={venue.name} className="space-y-1">
+          <div className="flex justify-between text-[10px] font-mono text-slate-400">
+            <span>{venue.name}</span>
+            <span>{venue.liquidity}%</span>
+          </div>
+          <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+            <div 
+              className={`h-full ${venue.color} rounded-full transition-all duration-1000 ease-out`}
+              style={{ width: `${venue.liquidity}%` }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 
 export default SmartBlotter;
