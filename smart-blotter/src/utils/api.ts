@@ -20,9 +20,9 @@ export const apiFetch = async <T = any>(
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Server Error: ${errorText}`);
-  }
-
+      const errorText = await response.text();
+      throw new Error(`Server Error: ${errorText}`);
+    }
+    
   return response.json();
 };

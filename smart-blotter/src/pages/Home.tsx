@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight, Terminal } from 'lucide-react'; 
 
 
-import { apiFetch } from '../utils/api'
-
-
+const BASE_URL = import.meta.env.VITE_API_URL 
 const Home = () => {
   const navigate = useNavigate();
   const [prompt, setPrompt] = useState("");
@@ -17,7 +15,7 @@ const Home = () => {
     setIsParsing(true);
     try {
       // 1. Call your .NET REST API
-      const response = await apiFetch('/api/trade/process-intent', {
+      const response = await fetch(`${BASE_URL}/api/trade/process-intent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: prompt })
@@ -25,8 +23,7 @@ const Home = () => {
 
       
       if (!response.ok) {
-       const errorText = await response.text();
-       console.error("Server Error:", errorText);
+        console.error("API returned an error:", response.statusText);
        return;
     }
       
